@@ -1,0 +1,84 @@
+.container {
+    width: 100vw;
+    background-color: white;
+    min-height: 50vh;
+    border-radius: 15% 15% 0% 0%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.container p{
+    font-family: Inter;/* Adjust based on your requirements */
+    font-weight: 800; /* Set the height to make it scrollable */
+    font-size: 16px; /* Enable vertical scrolling */
+    color: #5d0992;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.transactions_column {
+    display: flex;
+    flex-direction: column;
+}
+
+.transactions_container {
+    width: 85%; /* Adjust based on your requirements */
+    height: 50vh; /* Set the height to make it scrollable */
+    overflow-y: scroll; /* Enable vertical scrolling */
+}
+
+.transactions_list {
+    margin-top: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px
+}
+
+/* Style for each transaction item */
+.transactions_list li {
+    padding: 12px;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 8px rgba(10, 10, 20, 0.1);
+    border-radius: 10px;
+    border-bottom: 1px solid #eee; /* Optional border for each item */
+    background-color: white; /* Optional background color */
+}
+
+.transactions_list h1 {
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 800;
+    color: #fdbb01;
+}
+
+.transactions_list h2 {
+    font-family: Inter;
+    font-size: 10px;
+    font-weight: 800;
+    color: #5d0992;
+}
+
+.image_coin{
+    border-radius: 50px;
+    max-height: 40px;
+    max-width: 40px;
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent tiling */
+    overflow: hidden;
+    margin-right: 0.5rem;
+}
+
+.image_coin img{
+    object-fit: cover;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
