@@ -4,10 +4,9 @@ import Image from "next/image";
 import styles from "../../components/Home/Home.module.css";
 import {nomo} from 'nomo-webon-kit';
 import {useEffect, useState} from "react";
-import MagicButton from "../../components/MagicButton/MagicButton";
 import Transactions from "../../components/Transactions/Transactions";
 import ImageModal from "../../components/ImageModal/ImageModal";
-
+import {getPriceFromRechnung} from "../../Resources/getPriceFromRechnung"
 
 export default function Home() {
 	
@@ -20,18 +19,29 @@ export default function Home() {
 	const openModal = () => setIsModalOpen(true);
 	const closeModal = () => setIsModalOpen(false);
 	
-	const handleButtonClick1 = () => {
-		console.log('Button 1 clicked');
-		// Add more logic here for button 1
+	const handleButtonClick1 = async () => {
+		try {
+			const response = await nomo.qrScan();
+			console.log(response);
+			console.log(getPriceFromRechnung(response.qrCode));
+			let result = getPriceFromRechnung(response.qrCode).split(',');
+			let resultRight = result[1].padEnd(18,'0');
+			let bigIntString = result[0] + resultRight;
+			console.log(bigIntString);
+			
+			await nomo.sendAssets({
+				asset: {symbol: 'JACKT', contractAddress: '0x203718eE620ef9b68EA28b698d9502567DB6207d', network: 'zeniq-smart-chain'},
+				amount: bigIntString
+			})
+		} catch (error) {
+			console.error('Failed to fetch QR code:', error);
+		}
 		closeModal();
 	};
 	
 	const handleButtonClick2 = () => {
-		console.log('Button 2 clicked');
-		// Add more logic here for button 2
 		closeModal();
 	};
-	
 	
 	useEffect(() => {
 		// Define the async function to fetch balance
@@ -82,12 +92,10 @@ export default function Home() {
 	async function scanQRcode() {
 		try {
 			const response = await nomo.qrScan();
-			openModal();
-			await nomo.launchUrl({url: response.qrCode, launchMode: 'platformDefault'})
+			console.log(response);
 		} catch (error) {
 			console.error('Failed to fetch QR code:', error);
 		}
-		
 	}
 	
 	function shortenAddress(address, chars = 6) {
@@ -104,7 +112,7 @@ export default function Home() {
 					<div className={styles.flexcol}>
 						<div className={styles.text}>
 							<p1>
-								Your Rewards ($JACK)
+								Store Balance ($JACK)
 							</p1>
 							<div className={styles.flexrow}>
 								<div className={styles.image_coin}>
@@ -122,7 +130,7 @@ export default function Home() {
 						</div>
 					</div>
 					<div className={styles.image_profile}>
-						<img src={'/laila.png'} alt="profile picture"/>
+						<img src={'/vougee.png'} alt="profile picture"/>
 					</div>
 				</div>
 				
@@ -131,35 +139,35 @@ export default function Home() {
 				<div className={styles.flexrow}>
 					<div className={styles.flexcol}>
 						<div className={styles.icon_container}>
-							<img src={'/store.png'} alt="Physical store"/>
+							<img src={'/store.png'} alt="Virtual store"/>
 						</div>
-						<p>Physical Stores</p>
+						<p>Manage My Store</p>
 					</div>
 					<div className={styles.flexcol}>
 						<div className={styles.icon_container}>
-							<img src={'/grocery-store.png'} alt="Virtual store"/>
+							<img src={'/grocery-store.png'} alt="Physical store"/>
 						</div>
-						<p>Virtual Stores</p>
+						<p>Manage Online Shop</p>
 					</div>
 					<div className={styles.flexcol}>
 						<div className={styles.icon_container}>
 							<img src={'/discount.png'} alt="On Sale"/>
 						</div>
-						<p>Special Offers</p>
+						<p>Manage Offers</p>
 					</div>
 					<div className={styles.flexcol}>
 						<div className={styles.icon_container}>
-							<img src={'/high-five.png'} alt="referral"/>
+							<img src={'/rating.png'} alt="referral"/>
 						</div>
-						<p>Friend Referral</p>
+						<p>Ratings & Feedbacks</p>
 					</div>
 				</div>
 				
 				<div className={styles.spacer}></div>
 				
-				<div className={styles.flexrow}>
-					<button onClick={scanQRcode}>
-						<MagicButton/>
+				<div className={styles.row}>
+					<button onClick={openModal}>
+						Distribute Rewards
 					</button>
 					<ImageModal
 						imageUrl="/qrcode.svg"

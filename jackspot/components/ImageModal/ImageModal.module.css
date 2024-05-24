@@ -1,0 +1,119 @@
+/* Modal overlay to cover the whole screen */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+/* Modal content */
+.modal {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+}
+
+/* Close button */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Image styles */
+.image {
+    width: 100%;
+    height: auto;
+}
+
+.buttonContainer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+}
+
+/* Button styles */
+.buttonContainer button {
+    height: 4rem;
+    background-color: #5d0992;
+    width: 60vw;
+    border-radius: 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.star {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    animation: pop 2s infinite;
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(1.0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(3.0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.0);
+        opacity: 0;
+    }
+}
+
+/* Random star positions and delays */
+.star:nth-child(1) {
+    top: 10%;
+    left: 70%;
+    animation-delay: 0s;
+}
+.star:nth-child(2) {
+    top: 30%;
+    left: 20%;
+    animation-delay: 1s;
+}
+.star:nth-child(3) {
+    top: 80%;
+    left: 50%;
+    animation-delay: 2s;
+}
+
+.star:nth-child(4) {
+    top: 70%;
+    left: 40%;
+    animation-delay: 2s;
+}
+
+.star:nth-child(5) {
+    top: 20%;
+    right: 30%;
+    animation-delay: 2s;
+}
